@@ -21,6 +21,9 @@ export const MAIN_QUESTS = [
 ];
 
 export const BONUS_QUESTS = [
+  { id: "mtech",    name: "MTech study (AI/ML)",         req: "Focused session", xp: 10, attr: "intelligence" },
+  { id: "pgdm",     name: "PGDM study (IT Management)",  req: "Focused session", xp: 10, attr: "intelligence" },
+  { id: "read",     name: "Read 5 pages of a book",      req: "Any book, at least 5 pages", xp: 5, attr: "intelligence" },
   { id: "python",   name: "Python / interview practice", req: "30 minutes", xp: 10, attr: "career" },
   { id: "aiproj",   name: "AI project / AI Council work", req: "45 minutes", xp: 15, attr: "career" },
   { id: "expenses", name: "Track all expenses",          req: "Full day logged", xp: 5,  attr: "wealth" },
@@ -320,6 +323,9 @@ export function weeklyScorecard() {
       recovery: tally(has("main", "recovery")),
     },
     bonus: {
+      mtech: tally(has("bonus", "mtech")),
+      pgdm: tally(has("bonus", "pgdm")),
+      read: tally(has("bonus", "read")),
       python: tally(has("bonus", "python")),
       aiproj: tally(has("bonus", "aiproj")),
       expenses: tally(has("bonus", "expenses")),
@@ -351,6 +357,9 @@ Movement/exercise: ${s.main.body} / 7
 Sleep cutoff followed: ${s.main.recovery} / 7
 
 BONUS
+MTech (AI/ML) sessions: ${s.bonus.mtech}
+PGDM (IT Management) sessions: ${s.bonus.pgdm}
+Reading days (5+ pages): ${s.bonus.read}
 Python/interview sessions: ${s.bonus.python}
 AI project sessions: ${s.bonus.aiproj}
 Expenses tracked: ${s.bonus.expenses}
