@@ -179,6 +179,27 @@ export function levelInfo() {
   };
 }
 
+// Full level ladder: every title, its XP threshold, and done/current/locked
+// state, plus how far the player is from the next rung.
+export function ladder() {
+  const info = levelInfo();
+  return {
+    total: info.total,
+    nextLevel: info.max ? null : info.level + 1,
+    nextTitle: info.max ? null : TITLES[info.level],
+    toNext: info.max ? 0 : info.need - info.into,
+    into: info.into,
+    need: info.need,
+    max: info.max,
+    levels: TITLES.map((title, i) => {
+      const level = i + 1;
+      const threshold = i * XP_PER_LEVEL; // total XP required to reach this level
+      const state = level < info.level ? "done" : level === info.level ? "current" : "locked";
+      return { level, title, threshold, state };
+    }),
+  };
+}
+
 // Attribute totals (uncapped flavour score) feeding the radar.
 export function attributeTotals() {
   const totals = Object.fromEntries(ATTRIBUTES.map((a) => [a.id, 0]));

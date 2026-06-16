@@ -208,6 +208,44 @@ body {
 .stat-label { font-size: 0.66rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
 .hero-hint { margin: 14px 0 0; font-size: 0.82rem; color: var(--muted); }
 
+/* ---------- ascension ladder ---------- */
+.ladder-card { grid-column: 1 / -1; }
+.ladder { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 700px) { .ladder { grid-template-columns: 1fr; } }
+.rung {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 14px;
+  border-radius: 13px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+  transition: border-color .2s, background .2s;
+}
+.rung.done { border-color: rgba(52, 211, 153, 0.28); }
+.rung.done .rung-mark { color: var(--good); }
+.rung.current {
+  border-color: var(--cyan);
+  background: linear-gradient(120deg, rgba(56,189,248,0.12), rgba(168,85,247,0.1));
+  box-shadow: 0 0 22px rgba(56,189,248,0.18);
+}
+.rung.current .rung-mark { color: var(--cyan); }
+.rung.locked { opacity: 0.6; }
+.rung.locked .rung-mark { color: var(--muted); }
+.rung-mark { flex: 0 0 18px; display: grid; place-items: center; }
+.rung-num {
+  flex: 0 0 30px; height: 30px; width: 30px;
+  display: grid; place-items: center;
+  border-radius: 9px;
+  font-weight: 800; font-size: 0.85rem;
+  border: 1px solid var(--border-strong);
+  background: rgba(0,0,0,0.25);
+}
+.rung.current .rung-num { background: var(--grad); color: #051322; border: none; }
+.rung-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.rung-title { font-weight: 700; font-size: 0.9rem; }
+.rung.current .rung-title { color: var(--cyan); }
+.rung-sub { font-size: 0.72rem; color: var(--muted); }
+.rung-xp { font-weight: 800; font-size: 0.78rem; color: var(--teal); white-space: nowrap; }
+
 /* ---------- quests ---------- */
 .quest-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
 .quest {

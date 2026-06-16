@@ -203,6 +203,40 @@ function renderHero() {
   badge.className = "badge " + (done >= 5 ? "gold" : done >= 3 ? "good" : "");
 }
 
+// ---------- ascension ladder ----------
+function renderLadder() {
+  const L = G.ladder();
+
+  $("#ladderNext").textContent = L.max ? "Max rank" : `Next: Lv ${L.nextLevel}`;
+  $("#ladderNext").className = "badge " + (L.max ? "gold" : "good");
+  $("#ladderHint").textContent = L.max
+    ? "You have reached the Ascendant — the highest rank of Season 1."
+    : `${L.toNext} XP to Level ${L.nextLevel} — The ${L.nextTitle}. (${L.into} / ${L.need} this level)`;
+
+  $("#ladder").innerHTML = L.levels.map((lv) => {
+    const range = lv.level < 10 ? `${lv.threshold} XP` : `${lv.threshold} XP`;
+    const sub =
+      lv.state === "done" ? "Achieved" :
+      lv.state === "current" ? "Current rank" :
+      `Reach ${lv.threshold} XP`;
+    const marker =
+      lv.state === "done" ? icon("check") :
+      lv.state === "current" ? icon("spark") :
+      icon("dot");
+    const pct = lv.state === "current" && !L.max ? Math.round(L.into / L.need * 100) : null;
+    return `
+      <li class="rung ${lv.state}">
+        <span class="rung-mark">${marker}</span>
+        <span class="rung-num">${lv.level}</span>
+        <span class="rung-body">
+          <span class="rung-title">The ${lv.title}</span>
+          <span class="rung-sub">${sub}${pct !== null ? ` &middot; ${pct}%` : ""}</span>
+        </span>
+        <span class="rung-xp">${range}</span>
+      </li>`;
+  }).join("");
+}
+
 // ---------- scorecard ----------
 function renderScorecard() {
   $("#scorecard").textContent = G.scorecardText();
@@ -221,6 +255,7 @@ function checkLevelUp() {
 // ---------- master render ----------
 function renderAll() {
   renderHero();
+  renderLadder();
   buildQuests();
   buildBosses();
   renderRadar();
